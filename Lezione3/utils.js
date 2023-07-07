@@ -1,18 +1,52 @@
+/**
+ * Recupera il primo elmento con la classe specificata, ritorna l'elemento
+ * @param {*} classe stringa
+ * @returns 
+ */
 export function elementoPerClasse(classe){
 	return document.querySelector("."+classe)
 }
+/**
+ * Recupera l'elemento della pagina con l'id specificata, ritorna l'elemento
+ * @param {*} id stringa
+ * @returns 
+ */
 export function elementoPerId(id){
 	return document.getElementById(id)
 }
 
+/**
+ * Aggiunge una classe ad un elemento
+ * @param {*} elemento elemento al quale aggiungere
+ * @param {*} classe classe da aggiungere, stringa
+ */
 export function aggiungiClasse(elemento,classe){
 	elemento.classList.add(classe)
 }
+/**
+ * Toglie una classe da un elemento
+ * @param {*} elemento elemento al quale togliere
+ * @param {*} classe classe da togliere, stringa
+ */
 export function togliClasse(elemento,classe){
 	elemento.classList.remove(classe)
 }
+/**
+ * Verifica se un elemento ha una classe, ritorna un booleano
+ * @param {*} elemento elemento sul quale verificare
+ * @param {*} classe classe da cercare
+ */
 export function haClasse(elemento,classe){
 	return elemento.classList.contains(classe)
+}
+
+/**
+ * Modifica il valore di una classe css
+ * @param {*} nome nome della variabile, stringa
+ * @param {*} valore valore della variabile, stringa (o numero)
+ */
+export function impostaVariabileCss(nome,valore){
+	document.body.style.setProperty(nome,valore)
 }
 
 /**
