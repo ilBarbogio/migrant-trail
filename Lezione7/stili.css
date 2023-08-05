@@ -1,0 +1,42 @@
+@import "./mappa/map.css";
+
+@keyframes splash{
+	0% {opacity:0;}
+	50% {opacity:1;}
+	100% {opacity:0;}
+}
+
+*{
+ padding:0;
+ margin:0;
+}
+
+body{
+	position:relative;
+	background-color:black;
+	color:white;
+}
+
+.pagina{
+	position:absolute;
+	width:100vw;
+	height:100vh;
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+}
+
+.nascosta{
+	display:none;
+}
+
+#splash{
+	opacity:0;
+	animation-name:splash;
+	animation-duration:4s;
+	animation-iteration-count: 1;
+}
+#splash img{
+	margin:2em;
+}

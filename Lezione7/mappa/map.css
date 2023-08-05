@@ -1,0 +1,41 @@
+/* #mappa{
+} */
+#mappa #contenitore-mappa{
+	position:relative;
+	width:100%;
+	height:fit-content;
+}
+
+#contenitore-mappa > #mappa-header{
+	text-align: center;
+}
+#contenitore-mappa > #mappa-footer{
+	text-align: center;
+}
+
+#contenitore-mappa > #mappa-africa{
+	position:relative;
+	width:100%;
+	object-fit: contain;
+	z-index:0;
+}
+
+#contenitore-mappa #pedina{
+	position:absolute;
+	width:10px;
+	height:20px;
+	border-radius: 4px;
+	border:1px solid gray;
+	background-color: red;
+	z-index:10;
+}
+
+#contenitore-mappa .city{
+	position:absolute;
+	width:20px;
+	height:20px;
+	border-radius: 50%;
+	border:1px solid gray;
+	background-color: chocolate;
+	z-index:5;
+}
