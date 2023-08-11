@@ -39,3 +39,10 @@
 	background-color: chocolate;
 	z-index:5;
 }
+
+#contenitore-mappa .city.partenza{
+	background-color: blue;
+}
+#contenitore-mappa .city.arrivo{
+	background-color: green;
+}

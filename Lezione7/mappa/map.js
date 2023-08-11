@@ -51,7 +51,7 @@ let mappaUrl="../assets/africa.jpg"
 let contenitore,mappa,pedina
 export let header,footer
 let dims,listaCitta
-export let probabilitaImprevisto=.02
+export let probabilitaImprevisto=.2
 
 let fase//"pausa"|"scelta-origine"|"scelta-obiettivo"|"movimento"|"imprevisto"|"riepilogo"
 let cittaOrigine, cittaPartenza, cittaArrivo
@@ -108,12 +108,16 @@ function creaPedina(x,y){
 }
 
 function posizionaPedina(x,y){
-	if(x!=undefined && y!=undefined){
-		pedina.setAttribute("data-x",x)
-		pedina.setAttribute("data-y",y)
+	if(pedina!=undefined){
+
+		if(x!=undefined && y!=undefined){
+			pedina.setAttribute("data-x",x)
+			pedina.setAttribute("data-y",y)
+		}
+		pedina.style.left=(pedina.getAttribute("data-x")*dims[0]-5)+"px"
+		pedina.style.top=(pedina.getAttribute("data-y")*dims[1]-20)+"px"
+	
 	}
-	pedina.style.left=(pedina.getAttribute("data-x")*dims[0]-5)+"px"
-	pedina.style.top=(pedina.getAttribute("data-y")*dims[1]-20)+"px"
 }
 
 
@@ -124,6 +128,12 @@ function creaCitta(c){
 	citta.setAttribute("data-nome",c.nome)
 	citta.setAttribute("data-x",x)
 	citta.setAttribute("data-y",y)
+	citta.setAttribute("data-descrizione",c.descrizione)
+	citta.setAttribute("data-partenza",c.partenza)
+	citta.setAttribute("data-arrivo",c.arrivo)
+	citta.setAttribute("data-cittaraggiungibili",c.cittaRaggiungibili)
+	if(c.partenza == true) citta.classList.add("partenza")
+	else if(c.arrivo == true) citta.classList.add("arrivo")
 	posizionaCitta(citta)
 	contenitore.append(citta)
 	listaCitta.push(citta)
@@ -136,18 +146,21 @@ function creaCitta(c){
 
 		}else if(fase=="scelta-obiettivo"){
 			if(cittaPartenza!=ev.target){
-				cittaArrivo=ev.target
+				let datiCitta=ev.target.dataset
+				let event=new CustomEvent("clickobiettivo",{detail:datiCitta})
+				window.dispatchEvent(event)
+				
+				// cittaArrivo=ev.target
+				// let start=[parseFloat(pedina.getAttribute("data-x")),parseFloat(pedina.getAttribute("data-y"))]
+				// let goal=[parseFloat(cittaArrivo.getAttribute("data-x")),parseFloat(cittaArrivo.getAttribute("data-y"))]
+				// let vector=[goal[0]-start[0],goal[1]-start[1]]
+				// let mod=Math.hypot(...vector)
+				// oldDistance=mod
+				// passatoImprevisto=false
 
-				let start=[parseFloat(pedina.getAttribute("data-x")),parseFloat(pedina.getAttribute("data-y"))]
-				let goal=[parseFloat(cittaArrivo.getAttribute("data-x")),parseFloat(cittaArrivo.getAttribute("data-y"))]
-				let vector=[goal[0]-start[0],goal[1]-start[1]]
-				let mod=Math.hypot(...vector)
-				oldDistance=mod
-				passatoImprevisto=false
-
-				oldTime=performance.now()
-				requestAnimationFrame(loop)
-				impostaFase("movimento")
+				// oldTime=performance.now()
+				// requestAnimationFrame(loop)
+				// impostaFase("movimento")
 			}
 		}
 	})
@@ -163,6 +176,21 @@ export function confermaOrigine(nome){
 		cittaPartenza=origine
 		impostaFase("scelta-obiettivo")
 	}
+}
+
+export function confermaObiettivo(obiettivo){
+	cittaArrivo=document.querySelector("[data-nome="+obiettivo+"]")
+	console.log(cittaArrivo)
+	let start=[parseFloat(pedina.getAttribute("data-x")),parseFloat(pedina.getAttribute("data-y"))]
+	let goal=[parseFloat(cittaArrivo.getAttribute("data-x")),parseFloat(cittaArrivo.getAttribute("data-y"))]
+	let vector=[goal[0]-start[0],goal[1]-start[1]]
+	let mod=Math.hypot(...vector)
+	oldDistance=mod
+	passatoImprevisto=false
+
+	oldTime=performance.now()
+	requestAnimationFrame(loop)
+	impostaFase("movimento")
 }
 
 export function riprendiMovimento(){
